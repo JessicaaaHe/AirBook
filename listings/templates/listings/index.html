@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block head %}
+          <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+          <meta charset="utf-8">
+          <title>AirBook</title>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <form class="form-horizontal", method="GET">
+            <div class="row">
+                <div class="col-sm-5">
+                <input class="form-control" placeholder="Enter your location">
+                </div>
+                <button type="submit" class="btn btn-primary" value="Submit">Submit</button>
+            </div>
+        </form>
+    </div>
+    <br/>
+    <div id="map", class="container"></div>
+{% endblock %}

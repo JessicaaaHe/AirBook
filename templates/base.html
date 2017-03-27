@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+    <head>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+        <script src="/static/jquery-3.1.1.min.js"></script>
+    {% block head %}
+    {% endblock %}
+    </head>
+    <body>
+        <nav class="navbar navbar-inverse">
+            <div class="container">
+              <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                  <a class="navbar-brand" href="/">Home</a>
+                </div>
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                    <li><a href="/">Listing</a></li>
+                  </ul>
+                </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+            </div>
+        </nav>
+        {% block content %}
+        {% endblock content %}
+        <footer class="site-footer">
+            <div class="container">
+                <hr>
+                <p class="text-center">
+                    <a href="mailto:lilixu@nyu.edu?subject=Feedback" id="chat-link" target="_blank">
+                    <i class="glyphicon glyphicon-envelope"></i>Send Feedback</a>
+                </p>
+                <p class="text-center">Copyright © 2017 Graindog</p>
+            </div>
+        </footer>
+    </body>
+</html>
