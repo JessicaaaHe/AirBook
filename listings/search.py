@@ -1,6 +1,7 @@
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 #from requests_aws4auth import AWS4Auth
 import math
+from django.http import HttpResponse
 
 host = 'search-listings-copyetrhi7huiyy2bd57lzrrdm.us-east-1.es.amazonaws.com'
 #awsauth = AWS4Auth('', '', 'us-east-1', 'es')
@@ -29,3 +30,8 @@ def deg2rad(deg):
 def search(lat_a, lon_a, limit):
     result = es.search(index='listings', size=100)['hits']['hits']
     return [x for x in result if distance(lat_a, lon_a, float(x['_source']['latitude']), float(x['_source']['longitude'])) <= limit]
+
+def searchByKeyword(request, keyword, roomtype): # return json list
+
+    response = HttpResponse(content_type="application/json");
+    return response
