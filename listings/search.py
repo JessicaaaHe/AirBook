@@ -15,23 +15,40 @@ es = Elasticsearch(
 )
 
 
-def distance(lat1, lon1, lat2, lon2):
-    dlat = deg2rad(lat2-lat1)
-    dlon = deg2rad(lon2-lon1)
-    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(deg2rad(lat1)) * math.cos(deg2rad(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-    return 6371 * c
+def search(lat_a, lon_a, range, roomtype, limit=1000):
+    """Retrieves specific listings from elasticsearch
 
+    Args:
+        lat_a, lon_a: float
+        range: str    '5km'
+        roomtype: str
+        limit: int    size of the records
 
-def deg2rad(deg):
-    return deg * (math.pi/180)
+    Returns:
+        A list of dict
+    """
+    search_query = {
+        "query": {
+            "bool": {
+                "must": {
+                    "match": {'room_type': roomtype}
+                },
+                "filter": {
+                    "geo_distance": {
+                        "distance": range,
+                        "location": {
+                            "lat": lat_a,
+                            "lon": lon_a
+                        }
+                    }
+                }
+            }
+        }
+    }
+    result = es.search(index='geo-search-index', size=limit, body=search_query)['hits']['hits']
+    return result
 
-
-def search(lat_a, lon_a, limit):
-    result = es.search(index='listings', size=100)['hits']['hits']
-    return [x for x in result if distance(lat_a, lon_a, float(x['_source']['latitude']), float(x['_source']['longitude'])) <= limit]
 
 def searchByKeyword(request, keyword, roomtype): # return json list
-
-    response = HttpResponse(content_type="application/json");
+    response = HttpResponse(content_type="application/json")
     return response

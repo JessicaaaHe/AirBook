@@ -27,9 +27,9 @@
                 <div class="col-md-2">
                     <select class="form-control" name="roomtype" onchange="getRoomType(this.value)">
                         <option selected="selected" disabled>Room Type</option>
-                        <option value="shared">Shared Space</option>
-                        <option value="private">Private Room</option>
-                        <option value="entire">Entire House</option>
+                        <option value="Shared room">Shared room</option>
+                        <option value="Private room">Private room</option>
+                        <option value="Entire home/apt">Entire home/apt</option>
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary" value="Submit" onclick="searchKeyWord()">Submit</button>
@@ -38,8 +38,8 @@
     </div>
     <br/>
     <div class="container">
-        <p>{{ address }}</p><p>{{ geometry }}</p>
-        <p>{{ count }} Listings Nearby in 5km</p>
+        <p>{{ address }}</p>
+        <p>{{ message }}</p>
     </div>
     <div id="map", class="container"></div>
      <script>

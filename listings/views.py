@@ -12,8 +12,9 @@ def index(request):
         geocode_result = gmaps.geocode(keyword + ' ' + 'New York')[0]
         address = geocode_result['formatted_address']
         geometry = geocode_result['geometry']['location']
-        count = len(search.search(geometry['lat'], geometry['lng'], 5))
-        return render(request, 'listings/index.html', {'address': address, 'geometry': geometry, 'count': count})
+        count = len(search.search(geometry['lat'], geometry['lng'], '1km', roomtype))
+        message = 'There are {} {} Listings on Airbnb nearby within 1km!'.format(count, roomtype)
+        return render(request, 'listings/index.html', {'address': address, 'message': message})
     else:
         return render(request, 'listings/index.html')
 
