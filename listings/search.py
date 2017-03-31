@@ -1,7 +1,7 @@
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 #from requests_aws4auth import AWS4Auth
-import math
-from django.http import HttpResponse
+#from django.http import HttpResponse
+import json
 
 host = 'search-listings-copyetrhi7huiyy2bd57lzrrdm.us-east-1.es.amazonaws.com'
 #awsauth = AWS4Auth('', '', 'us-east-1', 'es')
@@ -25,7 +25,7 @@ def search(lat_a, lon_a, range, roomtype, limit=1000):
         limit: int    size of the records
 
     Returns:
-        A list of dict
+        json list
     """
     search_query = {
         "query": {
@@ -46,9 +46,4 @@ def search(lat_a, lon_a, range, roomtype, limit=1000):
         }
     }
     result = es.search(index='geo-search-index', size=limit, body=search_query)['hits']['hits']
-    return result
-
-
-def searchByKeyword(request, keyword, roomtype): # return json list
-    response = HttpResponse(content_type="application/json")
-    return response
+    return json.dumps(result)
