@@ -3,7 +3,7 @@ from elasticsearch import Elasticsearch, RequestsHttpConnection
 #from django.http import HttpResponse
 import json
 
-host = 'search-listings-copyetrhi7huiyy2bd57lzrrdm.us-east-1.es.amazonaws.com'
+host = 'search-airbookdata-34vdv2rkhajpuxvgtgxhuvr5hy.us-east-1.es.amazonaws.com'
 #awsauth = AWS4Auth('', '', 'us-east-1', 'es')
 
 es = Elasticsearch(
@@ -25,7 +25,7 @@ def search(lat_a, lon_a, range, roomtype, limit=1000):
         limit: int    size of the records
 
     Returns:
-        json list
+        geojson list
     """
     search_query = {
         "query": {
@@ -46,4 +46,17 @@ def search(lat_a, lon_a, range, roomtype, limit=1000):
         }
     }
     result = es.search(index='geo-search-index', size=limit, body=search_query)['hits']['hits']
-    return json.dumps(result)
+
+    geo_result = []
+    for house in result:
+        geo_result.append({
+            "type": "Feature",
+            "geometry": {
+                "type": "Point",
+                "coordinates": [house['_source']['latitude'], house['_source']['longitude']]
+            },
+            "properties": {
+                "id": house['_source']['id']
+            }
+        })
+    return json.dumps(geo_result)
