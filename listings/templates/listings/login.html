@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<div class="video-background">
+    <div class="video-foreground">
+      <iframe src="https://www.youtube.com/embed/W0LHTWG-UmQ?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=W0LHTWG-UmQ" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+<head>
+	<title>Airbook | Login</title>
+	<meta charset="utf-8" name="description" content="Welcome to Airbook! Please login.">
+	<!-- fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+	<!-- reset -->
+	<link rel="stylesheet" type="text/css" href="./../../../static/reset.css">
+	<!-- styles -->
+	<link rel="stylesheet" type="text/css" href="./../../../static/loginstyle.css">
+</head>
+<body>
+	<header>
+		<img class="header-logo" src="./../../../images/logo.png" alt="Airbook logo">
+	</header>
+	<main>
+		<!-- Main signup box -->
+		<div class="signup-box">
+			<h2 class="form-title">Login</h2>
+			<!-- Signup form -->
+			<form class="signup-form"  method="post">
+				 <label for="email">Email</label>
+     			 <input type="email" name="email" id="email"
+     			 placeholder="brian@nyu.edu" />
+
+     			 <label for="password">Password</label>
+     			 <input type="password" name="password" placeholder="forthelichking">
+
+     			 <button type="submit" value="login" onclick="sendLoginRequest(this.form)">Login</button>
+			</form>
+			<div class="forgot-button">
+				<a href="./signup.html">Forgot password?</a>
+			</div>
+		</div>
+		<p class="login-link" >Did not have an account?
+		<a href="./signup.html">Sign up</a></p>
+	</main>
+</body>
+<script>
+    var username;
+    var password;
+    var hasuser = false;
+    function checkUserName(form){
+        username = form.username.value;
+        password = form.password.value;
+
+        $.ajax({
+            type: 'POST',
+            url: 'loginCheck',
+            data: { username: userName, password: password },
+            success: function(result) {
+               // todo something check if current user match
+                hasuser = true;
+            }
+        });
+        if(!hasuser){
+            // no such user
+        }
+
+    }
+    function sendLoginRequest(form){
+        checkUserName(form);
+        console.log("done");
+        if(hasuser){
+            $.post('homepage')
+        }
+    }
+
+</script>
+</html>
