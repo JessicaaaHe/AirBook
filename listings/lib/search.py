@@ -1,7 +1,7 @@
 from elasticsearch import Elasticsearch, RequestsHttpConnection
 #from requests_aws4auth import AWS4Auth
-#from django.http import HttpResponse
-import json
+from django.http import HttpResponse
+import googlemaps, json
 
 host = 'search-airbookdata-34vdv2rkhajpuxvgtgxhuvr5hy.us-east-1.es.amazonaws.com'
 #awsauth = AWS4Auth('', '', 'us-east-1', 'es')
@@ -14,8 +14,17 @@ es = Elasticsearch(
     connection_class=RequestsHttpConnection
 )
 
+gmaps = googlemaps.Client(key='AIzaSyAzqsrd9qkXn7qoQSJJwCkhIMM77OffJSI')
 
-def search(lat_a, lon_a, range, roomtype, limit=1000):
+def search(request):
+    keyword, roomtype = request.POST.get('keyword'), request.POST.get('roomtype')
+    geocode_result = gmaps.geocode(keyword + ' ' + 'New York')[0]
+    geometry = geocode_result['geometry']['location']
+    geo_result = search_keyword(geometry['lat'], geometry['lng'], '1km', roomtype)
+    return HttpResponse(geo_result)
+
+
+def search_keyword(lat_a, lon_a, range, roomtype, limit=1000):
     """Retrieves specific listings from elasticsearch
 
     Args:
