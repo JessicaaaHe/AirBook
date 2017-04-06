@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<div class="video-background">
+    <div class="video-foreground">
+      <iframe src="https://www.youtube.com/embed/yz8h7tRV4Bg?controls=0&showinfo=0&rel=0&autoplay=1&loop=1&playlist=W0LHTWG-UmQ" frameborder="0" allowfullscreen></iframe>
+    </div>
+  </div>
+
+<head>
+	<title>Airbook | Login</title>
+	<meta charset="utf-8" name="description" content="Welcome to Airbook! Please login.">
+	<!-- fonts -->
+	<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700" rel="stylesheet">
+	<!-- reset -->
+	<link rel="stylesheet" type="text/css" href="./../../../static/reset.css">
+	<!-- styles -->
+	<link rel="stylesheet" type="text/css" href="./../../../static/signup.css">
+</head>
+<body>
+	<header>
+		<img class="header-logo" src="./../../../images/logo.png" alt="Airbook logo">
+	</header>
+	<main>
+		<!-- Main signup box -->
+		<div class="signup-box">
+			<h2 class="form-title">Sign up Airbook</h2>
+			<!-- Signup form -->
+			<form class="signup-form" action="./signup.html" method="post">
+                <label for="email">Email</label>
+     			 <input type="text" name="username" id="username"
+     			 placeholder="Please input your username!" />
+
+				 <label for="email">Email</label>
+     			 <input type="email" name="email" id="email"
+     			 placeholder="brian@nyu.edu" />
+
+     			 <label for="password">Password</label>
+     			 <input type="password" name="password" placeholder="forthelichkin">
+
+     			 <button type="submit">Sign up</button>
+			</form>
+		</div>
+		<p class="login-link" >Already have an account?
+		<a href="/signup">Login</a></p>
+	</main>
+</body>
+<script>
+    function sendLoginRequet(form){
+        email = form.email.value;
+        username = form.username.value;
+        password = form.password.value;
+        var registed = false;
+        $.ajax({
+            type: 'POST',
+            url: 'usercheck',
+            data: { username: userName,},
+            success: function(result) {
+                //registed true if return true
+               registed = true;
+            }
+        });
+        if(registed == true){
+            // todo something echo this user already registed
+            return;
+        }
+
+        $.post('insertuser',{
+            email: email,
+            username: username,
+            password:password
+        },parseState);
+
+    }
+
+
+</script>
+</html>
