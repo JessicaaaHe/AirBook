@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% block head %}
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>AirBook</title>
@@ -19,8 +20,6 @@
 
 {% block content %}
     <div class="container">
-        <form class="form-horizontal", method="post", action="/search/">
-            {% csrf_token %}
             <div class="row">
                 <div class="col-sm-5">
                 <input id='keyword' name='keyword' class="form-control" placeholder="Enter your location">
@@ -35,15 +34,12 @@
                 </div>
                 <button type="submit" class="btn btn-primary" value="Submit" onclick="searchKeyWord()">Submit</button>
             </div>
-        </form>
     </div>
     <br/>
-    <div class="container">
-        <p>{{ address }}</p>
-        <p>{{ message }}</p>
-    </div>
     <div id="map", class="container"></div>
      <script>
+        var map;
+        var markers = [];
         function initMap() {   //init map
             map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 4,
@@ -51,58 +47,53 @@
                 mapTypeId: 'terrain'
             });
             //add
-            google.maps.event.addListener(map, 'click', function(event){
+            google.maps.event.addListener(map, 'click', function (event) {
                 latLong = event.latLng;
-                update_timeout = setTimeout(function(){
-                  coordinates = event.latLng;
-                  latitude = coordinates['lat']();
-                  longitude = coordinates['lng']();
-                  this.map.setCenter(latLong);
-                  this.map.setZoom(6);
+                update_timeout = setTimeout(function () {
+                    coordinates = event.latLng;
+                    latitude = coordinates['lat']();
+                    longitude = coordinates['lng']();
+                    this.map.setCenter(latLong);
+                    this.map.setZoom(6);
                 }, 200);
             });
             //Ignore double clicks
-            google.maps.event.addListener(map, 'dblclick', function(event) {
+            google.maps.event.addListener(map, 'dblclick', function (event) {
                 clearTimeout(update_timeout);
             });
         }
 
         function getRoomType(keyWord) {
-            roomType = keyWord;
-        }
-
-        function getKeyword(){
-            keyWord = document.getElementsByName("keyword");
-            console.log(keyWord);
+            roomtype = keyWord;
         }
 
         function searchKeyWord() {
-            alert(keyWord);
-            if(keyWord != undefined && roomType != undefined){
-                var url = 'json/'.concat(keyWord).concat('/').concat(roomType).concat('/');
+            var keyword = document.getElementsByName("keyword")[0].value;
+
+            if(keyword != undefined && roomtype != undefined){
+                var url = 'json/'.concat(keyword).concat('/').concat(roomtype).concat('/');
                 $.getJSON(url,parseJSON);
             }
         }
 
-        function parseJSON(data){
-            console.log(data);
-            var latLng=data['geometry']['coordinates'];
-            var id=data['id'];
-            var marker=new google.maps.Marker({
-                icon: {
-                    path: google.maps.SymbolPath.CIRCLE,
-                    scale: 3,
-                    fillOpacity: 1,
-                    fillColor: "#ff332c",
-                    strokeColor: "#ff332c"
-                },
-                position:latLng,
-                map:map,
-                id:id
+        function parseJSON(data, status, xhr) {
+            for (var i = 0; i < data.length; i++){
+                var id = data[i]['properties']['id'];
+                var marker = new google.maps.Marker({
+                    icon: {
+                        path: google.maps.SymbolPath.CIRCLE,
+                        scale: 2,
+                        fillOpacity: 1,
+                        fillColor: "#ff332c",
+                        strokeColor: "#ff332c"
+                    },
+                    position: {lat: parseFloat(data[i]['geometry']['coordinates'][0]), lng: parseFloat(data[i]['geometry']['coordinates'][1])},
+                    map: map,
+                    id: id
                 });
-            markers.push(marker);
+                markers.push(marker);
+            }
         }
-
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzqsrd9qkXn7qoQSJJwCkhIMM77OffJSI&callback=initMap">

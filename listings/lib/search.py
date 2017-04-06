@@ -16,12 +16,17 @@ es = Elasticsearch(
 
 gmaps = googlemaps.Client(key='AIzaSyAzqsrd9qkXn7qoQSJJwCkhIMM77OffJSI')
 
-def search(request):
-    keyword, roomtype = request.POST.get('keyword'), request.POST.get('roomtype')
+
+def search(request, keyword, roomtype):
     geocode_result = gmaps.geocode(keyword + ' ' + 'New York')[0]
     geometry = geocode_result['geometry']['location']
     geo_result = search_keyword(geometry['lat'], geometry['lng'], '1km', roomtype)
-    return HttpResponse(geo_result)
+
+    try:
+        print(len(geo_result))
+        return HttpResponse(json.dumps(geo_result), content_type="application/json")
+    except:
+        print("error")
 
 
 def search_keyword(lat_a, lon_a, range, roomtype, limit=1000):
@@ -34,7 +39,7 @@ def search_keyword(lat_a, lon_a, range, roomtype, limit=1000):
         limit: int    size of the records
 
     Returns:
-        geojson list
+        list
     """
     search_query = {
         "query": {
@@ -68,4 +73,4 @@ def search_keyword(lat_a, lon_a, range, roomtype, limit=1000):
                 "id": house['_source']['id']
             }
         })
-    return json.dumps(geo_result)
+    return geo_result
