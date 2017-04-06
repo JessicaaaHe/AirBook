@@ -29,7 +29,7 @@ def search(request, keyword, roomtype):
         print("error")
 
 
-def search_keyword(lat_a, lon_a, range, roomtype, limit=1000):
+def search_keyword(lat_a, lon_a, range, roomtype, limit=100):
     """Retrieves specific listings from elasticsearch
 
     Args:

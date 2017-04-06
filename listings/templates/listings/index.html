@@ -42,8 +42,8 @@
         var markers = [];
         function initMap() {   //init map
             map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 4,
-                center: new google.maps.LatLng(40.694439, -73.986536),
+                zoom: 12,
+                center: new google.maps.LatLng(40.746257652825314,-73.99628102640968),
                 mapTypeId: 'terrain'
             });
             //add
@@ -54,7 +54,7 @@
                     latitude = coordinates['lat']();
                     longitude = coordinates['lng']();
                     this.map.setCenter(latLong);
-                    this.map.setZoom(6);
+                    this.map.setZoom(14);
                 }, 200);
             });
             //Ignore double clicks
@@ -63,11 +63,19 @@
             });
         }
 
+        function setMapOnAll(map) {
+            for (var i = 0; i < markers.length; i++) {
+              markers[i].setMap(map);
+            }
+          }
+
         function getRoomType(keyWord) {
             roomtype = keyWord;
         }
 
         function searchKeyWord() {
+            setMapOnAll(null);
+            markers = [];
             var keyword = document.getElementsByName("keyword")[0].value;
 
             if(keyword != undefined && roomtype != undefined){
@@ -77,6 +85,7 @@
         }
 
         function parseJSON(data, status, xhr) {
+            markers = [];
             for (var i = 0; i < data.length; i++){
                 var id = data[i]['properties']['id'];
                 var marker = new google.maps.Marker({
