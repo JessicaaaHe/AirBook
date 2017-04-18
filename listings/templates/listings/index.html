@@ -1,21 +1,11 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>AirBook</title>
-    <style>
-          #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 100%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
+    <link rel="stylesheet" type="text/css" href="{% static 'map.css' %}">
 {% endblock %}
 
 {% block content %}
@@ -37,74 +27,6 @@
     </div>
     <br/>
     <div id="map", class="container"></div>
-     <script>
-        var map;
-        var markers = [];
-        function initMap() {   //init map
-            map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 12,
-                center: new google.maps.LatLng(40.746257652825314,-73.99628102640968),
-                mapTypeId: 'terrain'
-            });
-            //add
-            google.maps.event.addListener(map, 'click', function (event) {
-                latLong = event.latLng;
-                update_timeout = setTimeout(function () {
-                    coordinates = event.latLng;
-                    latitude = coordinates['lat']();
-                    longitude = coordinates['lng']();
-                    this.map.setCenter(latLong);
-                    this.map.setZoom(14);
-                }, 200);
-            });
-            //Ignore double clicks
-            google.maps.event.addListener(map, 'dblclick', function (event) {
-                clearTimeout(update_timeout);
-            });
-        }
-
-        function setMapOnAll(map) {
-            for (var i = 0; i < markers.length; i++) {
-              markers[i].setMap(map);
-            }
-          }
-
-        function getRoomType(keyWord) {
-            roomtype = keyWord;
-        }
-
-        function searchKeyWord() {
-            setMapOnAll(null);
-            markers = [];
-            var keyword = document.getElementsByName("keyword")[0].value;
-
-            if(keyword != undefined && roomtype != undefined){
-                var url = 'json/'.concat(keyword).concat('/').concat(roomtype).concat('/');
-                $.getJSON(url,parseJSON);
-            }
-        }
-
-        function parseJSON(data, status, xhr) {
-            markers = [];
-            for (var i = 0; i < data.length; i++){
-                var id = data[i]['properties']['id'];
-                var marker = new google.maps.Marker({
-                    icon: {
-                        path: google.maps.SymbolPath.CIRCLE,
-                        scale: 2,
-                        fillOpacity: 1,
-                        fillColor: "#ff332c",
-                        strokeColor: "#ff332c"
-                    },
-                    position: {lat: parseFloat(data[i]['geometry']['coordinates'][0]), lng: parseFloat(data[i]['geometry']['coordinates'][1])},
-                    map: map,
-                    id: id
-                });
-                markers.push(marker);
-            }
-        }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzqsrd9qkXn7qoQSJJwCkhIMM77OffJSI&callback=initMap">
-    </script>
+    <script src="{% static 'map.js' %}"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzqsrd9qkXn7qoQSJJwCkhIMM77OffJSI&callback=initMap"></script>
 {% endblock %}
