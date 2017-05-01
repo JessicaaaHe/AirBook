@@ -45,15 +45,24 @@ function searchKeyWord() {
 
 function parseJSON(data, status, xhr) {
     markers = [];
+    var total_price = 0;
     for (var i = 0; i < data.length; i++){
+        var fillcolor = "#ff332c";
         var id = data[i]['properties']['id'];
+        var price = data[i]['properties']['price'];
+        total_price += price;
+        if(price < 120.0 && price >= 80.0)
+            fillcolor = "#e6b800";
+        else if (price < 80.0)
+            fillcolor = "#228B22";
+
         var marker = new google.maps.Marker({
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
                 scale: 2,
                 fillOpacity: 1,
-                fillColor: "#ff332c",
-                strokeColor: "#ff332c"
+                fillColor: fillcolor,
+                strokeColor: fillcolor,
             },
             position: {lat: parseFloat(data[i]['geometry']['coordinates'][0]), lng: parseFloat(data[i]['geometry']['coordinates'][1])},
             map: map,
@@ -61,4 +70,5 @@ function parseJSON(data, status, xhr) {
         });
         markers.push(marker);
     }
+    $('#average_price').text("The average price for " + roomtype + " around " + document.getElementsByName("keyword")[0].value +" is $" + total_price/100.0);
 }
