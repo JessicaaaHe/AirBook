@@ -9,6 +9,9 @@
 {% endblock %}
 
 {% block content %}
+    <div class="progress" style="display:none; background-color:white">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="height: 5px"></div>
+    </div>
     <div class="container">
             <div class="row">
                 <div class="col-sm-5">
@@ -27,7 +30,9 @@
     </div>
     <br/>
      <div class="container">
-         <div id="average_price"></div>
+        <div id="rt_text" style="display:none"></div>
+         <div id="average_price" style="display:none"></div>
+         <div id="low_price" style="display:none"></div>
      </div>
     <br/>
     <div id="map", class="container"></div>

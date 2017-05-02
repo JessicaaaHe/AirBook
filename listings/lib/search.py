@@ -63,7 +63,6 @@ def search_keyword(lat_a, lon_a, range, roomtype, limit=100):
 
     geo_result = []
     for house in result:
-        print(house)
         geo_result.append({
             "type": "Feature",
             "geometry": {
