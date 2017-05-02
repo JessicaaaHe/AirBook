@@ -36,6 +36,10 @@ function searchKeyWord() {
     $('#rt_text').fadeOut('slow');
     $('#average_price').fadeOut('slow');
     $('#low_price').fadeOut('slow');
+    $('#loc_score').fadeOut('slow');
+    $('#chartContainer').fadeOut('slow');
+    $('#chartContainer2').fadeOut('slow');
+
     setMapOnAll(null);
     markers = [];
     var keyword = document.getElementsByName("keyword")[0].value;
@@ -105,8 +109,8 @@ function parseJSON(data, status, xhr){
     $('#average_price').text("The average price is $" + total_price/100.0).fadeIn("slow");
     $('#low_price').text("The lowest price is $" + low_price).fadeIn("slow");
     $('#loc_score').text("The Average Location Rating is " + avg_loc_score).fadeIn("slow");
-    $('#chartContainer').fadeIn();
+    $('#chartContainer').fadeIn("slow");
     showchart(loc_dis);
-    $('#chartContainer2').fadeIn();
+    $('#chartContainer2').fadeIn("slow");
     showchart2(prc_dis);
 }
