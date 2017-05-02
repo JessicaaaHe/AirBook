@@ -63,6 +63,8 @@ def search_keyword(lat_a, lon_a, range, roomtype, limit=100):
 
     geo_result = []
     for house in result:
+        #print(house)
+        lc_sc = house['_source']['review_scores_location']
         geo_result.append({
             "type": "Feature",
             "geometry": {
@@ -72,6 +74,7 @@ def search_keyword(lat_a, lon_a, range, roomtype, limit=100):
             "properties": {
                 "id": house['_source']['id'],
                 "price": float(house['_source']['price'][1:].replace(',', '')),
+                "loc_score": int(lc_sc) if lc_sc else -1,
             }
         })
     return geo_result

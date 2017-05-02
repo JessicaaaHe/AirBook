@@ -2,6 +2,7 @@
 {% load static %}
 {% block head %}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="{% static 'jquery.canvasjs.min.js' %}"></script>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <title>AirBook</title>
@@ -30,9 +31,13 @@
     </div>
     <br/>
      <div class="container">
-        <div id="rt_text" style="display:none"></div>
+         <div id="rt_text" style="display:none"></div>
          <div id="average_price" style="display:none"></div>
          <div id="low_price" style="display:none"></div>
+         <div id="loc_score" style="display:none"></div>
+         <div id="chartContainer" style="display:none; height: 300px; width: 100%;"></div>
+         <div id="chartContainer2" style="display:none; height: 300px; width: 100%;"></div>
+
      </div>
     <br/>
     <div id="map", class="container"></div>

@@ -49,18 +49,36 @@ function searchKeyWord() {
 function parseJSON(data, status, xhr){
     markers = [];
     var total_price = 0;
+    var total_score = 0;
     var low_price = 10000;
+    var c_loc = 0;
+    var loc_dis = [0,0,0,0,0,0,0,0,0,0,0];
+    var prc_dis = [0,0,0];
 
     for (var i = 0; i < data.length; i++){
         var fillcolor = "#ff332c";
         var id = data[i]['properties']['id'];
         var price = data[i]['properties']['price'];
-        total_price += price;
-        if(price < 120.0 && price >= 80.0)
-            fillcolor = "#e6b800";
-        else if (price < 80.0)
-            fillcolor = "#228B22";
+        var s_loc = data[i]['properties']['loc_score'];
 
+        total_price += price;
+        if(s_loc >= 0) {
+            total_score += s_loc;
+            c_loc += 1
+            loc_dis[s_loc] += 1
+        }
+
+        if(price < 120.0 && price >= 80.0) {
+            prc_dis[1] += 1;
+            fillcolor = "#e6b800";
+        }
+        else if (price < 80.0) {
+            prc_dis[0] += 1;
+            fillcolor = "#228B22";
+        }
+        else{
+            prc_dis[2] += 1
+        }
         if(price < low_price)
             low_price = price;
 
@@ -78,11 +96,19 @@ function parseJSON(data, status, xhr){
         });
         markers.push(marker);
     }
+
+    var avg_loc_score = total_score/c_loc;
+
     map.setCenter(new google.maps.LatLng(data[0]['geometry']['coordinates'][0],data[0]['geometry']['coordinates'][1]));
     map.setZoom(14);
     $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value).fadeIn("slow");
     $('#average_price').text("The average price is $" + total_price/100.0).fadeIn("slow");
     $('#low_price').text("The lowest price is $" + low_price).fadeIn("slow");
+    $('#loc_score').text("The Average Location Rating is " + avg_loc_score).fadeIn("slow");
+    $('#chartContainer').fadeIn();
+    showchart(loc_dis);
+    $('#chartContainer2').fadeIn();
+    showchart2(prc_dis);
 }
 
 $("button").click(
@@ -94,3 +120,44 @@ $("button").click(
     $('.progress').delay(1000).fadeOut(500);
   }
 )
+
+function showchart2(prc_dis) {
+	new CanvasJS.Chart("chartContainer2",
+	{
+	    title:{
+			text: "Price Distribution",
+		},
+		data: [
+		{
+			type: "pie",
+            animationEnabled: true,
+			dataPoints: [
+				{ y: prc_dis[2], indexLabel: "Above $120" },
+				{ y: prc_dis[1], indexLabel: "$80-$120" },
+				{ y: prc_dis[0], indexLabel: "Below $80" },
+			]
+		}
+		]
+	}).render();
+}
+
+function showchart(loc_dis) {
+	new CanvasJS.Chart("chartContainer",
+	{
+	    title:{
+			text: "Location Review By Customer",
+		},
+		data: [
+		{
+			type: "pie",
+            animationEnabled: true,
+			dataPoints: [
+				{ y: loc_dis[9], indexLabel: "10" },
+				{ y: loc_dis[8], indexLabel: "9" },
+				{ y: loc_dis[7], indexLabel: "8" },
+				{ y: loc_dis.slice(0,7).reduce(function(a, b){ return a + b;}, 0), indexLabel: "Below 8"}
+			]
+		}
+		]
+	}).render();
+}
