@@ -75,6 +75,9 @@ def search_keyword(lat_a, lon_a, range, roomtype, limit=100):
                 "id": house['_source']['id'],
                 "price": float(house['_source']['price'][1:].replace(',', '')),
                 "loc_score": int(lc_sc) if lc_sc else -1,
+                "url": house['_source']['listing_url'],
+                "name": house['_source']['name'],
+                "picture_url": house['_source']['picture_url'],
             }
         })
     return geo_result

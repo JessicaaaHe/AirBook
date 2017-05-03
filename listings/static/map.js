@@ -3,7 +3,7 @@ var markers = [];
 function initMap() {   //init map
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
-        center: new google.maps.LatLng(40.7128, -74.0059)
+        center: new google.maps.LatLng(40.706674, -73.956948)
     });
     //add
     google.maps.event.addListener(map, 'click', function (event) {
@@ -64,6 +64,7 @@ function parseJSON(data, status, xhr){
     var c_loc = 0;
     var loc_dis = [0,0,0,0,0,0,0,0,0,0,0];
     var prc_dis = [0,0,0];
+    var low_url = '';
 
     for (var i = 0; i < data.length; i++){
         var fillcolor = "#ff332c";
@@ -90,13 +91,14 @@ function parseJSON(data, status, xhr){
             prc_dis[2] += 1;
         }
 
-        if(price < low_price)
+        if(price < low_price) {
             low_price = price;
-
+            low_url = data[i]['properties']['url'];
+        }
         var marker = new google.maps.Marker({
             icon: {
                 path: google.maps.SymbolPath.CIRCLE,
-                scale: 2,
+                scale: 4,
                 fillOpacity: 1,
                 fillColor: fillcolor,
                 strokeColor: fillcolor,
@@ -105,6 +107,7 @@ function parseJSON(data, status, xhr){
             map: map,
             id: id
         });
+        attachSecretMessage(marker, data[i]['properties']);
         markers.push(marker);
     }
 
@@ -116,7 +119,7 @@ function parseJSON(data, status, xhr){
     $('#average_price').text("The average price is $" + total_price/data.length);
     $('#low_price').text("The lowest price is $" + low_price);
     $('#loc_score').text("The Average Location Rating is " + avg_loc_score);
-
+    $('#book_low').wrap('<a href=' + low_url +' />');
 
     $('#info-bar').fadeIn('slow');
     $('#tabs-1').fadeIn('slow');
@@ -124,4 +127,23 @@ function parseJSON(data, status, xhr){
     showchart(loc_dis);
     //$('#chartContainer2').fadeIn("slow");
     showchart2(prc_dis);
+}
+
+function attachSecretMessage(marker, property) {
+  var infowindow = new google.maps.InfoWindow({
+    content: " <div style=' width:100px;max-width:100px;' >" + property['name']+ " </div> " +
+      " <img src=' "+ property['picture_url'] + " ' width='100px'> "
+  });
+
+  marker.addListener('mouseover', function() {
+    infowindow.open(marker.get('map'), marker);
+  });
+
+    marker.addListener('mouseout', function() {
+    infowindow.close()});
+
+  marker.addListener('click', function() {
+    window.location.href = property['url'];
+
+});
 }
