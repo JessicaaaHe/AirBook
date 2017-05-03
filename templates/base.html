@@ -9,20 +9,18 @@
     <link href="static/style.css" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar fixed-bottom bg-faded">
+        <nav class="navbar bg-faded " style="height: 50px;">
               <div class="container-fluid">
                 <!-- Brand and toggle get grouped for better mobile display -->
                 <div class="navbar-header">
                   <img class="header-logo" src='{% static "logo.png" %}' alt="Airbook logo" style="width:68px">
                 </div>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav">
-                    <li><a href="/">Listing</a></li>
+                  <ul class="nav nav-pills">
+                      <li class="pull-right"><a href="login">Login </a></li>
+                      <li class="pull-right"><a href="signup">Signup</a></li>
                   </ul>
-                </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
-        <div class="progress" style=" background-color:white">
+        <div class="progress" style="background-color:white; height:5px">
             <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" style="height: 5px"></div>
         </div>
         </nav>

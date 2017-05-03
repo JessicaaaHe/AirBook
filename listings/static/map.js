@@ -33,12 +33,18 @@ function getRoomType(keyWord) {
 }
 
 function searchKeyWord() {
-    $('#rt_text').fadeOut('slow');
-    $('#average_price').fadeOut('slow');
-    $('#low_price').fadeOut('slow');
-    $('#loc_score').fadeOut('slow');
-    $('#chartContainer').fadeOut('slow');
-    $('#chartContainer2').fadeOut('slow');
+    //$('#rt_text').fadeOut('slow');
+    //$('#average_price').fadeOut('slow');
+    //$('#low_price').fadeOut('slow');
+    //$('#loc_score').fadeOut('slow');
+    //$('#chartContainer').fadeOut('slow');
+    //$('#chartContainer2').fadeOut('slow');
+
+    $('#chart_link').removeClass('active')
+    $('#basic_link').addClass('active')
+
+    $('#tabs-1').fadeOut('slow');
+    $('#tabs-2').fadeOut('slow');
 
     setMapOnAll(null);
     markers = [];
@@ -81,8 +87,9 @@ function parseJSON(data, status, xhr){
             fillcolor = "#228B22";
         }
         else{
-            prc_dis[2] += 1
+            prc_dis[2] += 1;
         }
+
         if(price < low_price)
             low_price = price;
 
@@ -105,12 +112,16 @@ function parseJSON(data, status, xhr){
 
     map.setCenter(new google.maps.LatLng(data[0]['geometry']['coordinates'][0],data[0]['geometry']['coordinates'][1]));
     map.setZoom(14);
-    $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value).fadeIn("slow");
-    $('#average_price').text("The average price is $" + total_price/100.0).fadeIn("slow");
-    $('#low_price').text("The lowest price is $" + low_price).fadeIn("slow");
-    $('#loc_score').text("The Average Location Rating is " + avg_loc_score).fadeIn("slow");
-    $('#chartContainer').fadeIn("slow");
+    $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value);//.fadeIn("slow");
+    $('#average_price').text("The average price is $" + total_price/data.length);//.fadeIn("slow");
+    $('#low_price').text("The lowest price is $" + low_price);//.fadeIn("slow");
+    $('#loc_score').text("The Average Location Rating is " + avg_loc_score);//.fadeIn("slow");
+
+
+    $('#info-bar').fadeIn('slow');
+    $('#tabs-1').fadeIn('slow');
+    //$('#chartContainer').fadeIn("slow");
     showchart(loc_dis);
-    $('#chartContainer2').fadeIn("slow");
+    //$('#chartContainer2').fadeIn("slow");
     showchart2(prc_dis);
 }

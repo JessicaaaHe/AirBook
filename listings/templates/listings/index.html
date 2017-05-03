@@ -11,7 +11,7 @@
 
 {% block content %}
     <div class="container">
-            <div class="row">
+            <div class="row float-left">
                 <div class="col-sm-5">
                 <input id='keyword' name='keyword' class="form-control" placeholder="Enter your location">
                 </div>
@@ -27,17 +27,33 @@
             </div>
     </div>
     <br/>
-     <div class="container">
-         <div id="rt_text" style="display:none"></div>
-         <div id="average_price" style="display:none"></div>
-         <div id="low_price" style="display:none"></div>
-         <div id="loc_score" style="display:none"></div>
-         <div id="chartContainer" style="display:none; height: 300px; width: 100%;"></div>
-         <div id="chartContainer2" style="display:none; height: 300px; width: 100%;"></div>
+    <div class="container" style="height:80%; width:95%">
+        <div class="row" style="height:100%; width:95%">
+            <div class="col-sm-8" style="height:100%; width:50%;">
+                    <div id="map" ></div>
+            </div>
+             <div id='info-panel' class="col-sm-5">
+                 <div id='info-bar' style="display: none">
+                     <ul class="nav nav-pills" >
+                        <li class="active" id="basic_link"><a href="#">Basic Info</a></li>
+                        <li id="chart_link"><a href="#">Chart</a></li>
+                     </ul>
+                 </div>
 
-     </div>
-    <br/>
-    <div id="map", class="container"></div>
+                <div id="tabs-1" style="display: none;">
+                     <div id="rt_text"></div>
+                     <div id="average_price"></div>
+                     <div id="low_price"></div>
+                     <div id="loc_score"></div>
+                </div>
+                <div id="tabs-2" style="display:none;">
+                     <div id="chartContainer" style="height: 150px;"></div>
+                     <div id="chartContainer2" style="height: 150px;"></div>
+                </div>
+             </div>
+        </div>
+    </div>
+
     <script src="{% static 'animation.js' %}"></script>
     <script src="{% static 'map.js' %}"></script>
     <script src="{% static 'chart.js' %}"></script>
