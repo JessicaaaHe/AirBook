@@ -33,16 +33,8 @@ function getRoomType(keyWord) {
 }
 
 function searchKeyWord() {
-    //$('#rt_text').fadeOut('slow');
-    //$('#average_price').fadeOut('slow');
-    //$('#low_price').fadeOut('slow');
-    //$('#loc_score').fadeOut('slow');
-    //$('#chartContainer').fadeOut('slow');
-    //$('#chartContainer2').fadeOut('slow');
-
-    $('#chart_link').removeClass('active')
-    $('#basic_link').addClass('active')
-
+    $('#chart_link').removeClass('active');
+    $('#basic_link').addClass('active');
     $('#tabs-1').fadeOut('slow');
     $('#tabs-2').fadeOut('slow');
 
@@ -116,13 +108,14 @@ function parseJSON(data, status, xhr){
     map.setCenter(new google.maps.LatLng(data[0]['geometry']['coordinates'][0],data[0]['geometry']['coordinates'][1]));
     map.setZoom(14);
     $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value);
-    $('#average_price').text("The average price is $" + total_price/data.length);
-    $('#low_price').text("The lowest price is $" + low_price);
-    $('#loc_score').text("The Average Location Rating is " + avg_loc_score);
+    $('#average_price').text(total_price/data.length);
+    $('#low_price').text(low_price);
+    $('#loc_score').text(avg_loc_score);
     $('#book_low').wrap('<a href=' + low_url +' />');
 
     $('#info-bar').fadeIn('slow');
-    $('#tabs-1').fadeIn('slow');
+    $('#tabs-1').fadeIn();
+    num_animation();
     //$('#chartContainer').fadeIn("slow");
     showchart(loc_dis);
     //$('#chartContainer2').fadeIn("slow");
