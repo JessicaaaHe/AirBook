@@ -57,7 +57,7 @@ function parseJSON(data, status, xhr){
     var loc_dis = [0,0,0,0,0,0,0,0,0,0,0];
     var prc_dis = [0,0,0];
     var low_url = '';
-
+    var nb_overview = '';
     for (var i = 0; i < data.length; i++){
         var fillcolor = "#ff332c";
         var id = data[i]['properties']['id'];
@@ -83,6 +83,9 @@ function parseJSON(data, status, xhr){
             prc_dis[2] += 1;
         }
 
+        if(data[i]['properties']['neighborhood_overview'].length > nb_overview.length)
+            nb_overview = data[i]['properties']['neighborhood_overview'];
+
         if(price < low_price) {
             low_price = price;
             low_url = data[i]['properties']['url'];
@@ -107,14 +110,16 @@ function parseJSON(data, status, xhr){
 
     map.setCenter(new google.maps.LatLng(data[0]['geometry']['coordinates'][0],data[0]['geometry']['coordinates'][1]));
     map.setZoom(14);
+
     $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value);
     $('#average_price').text(total_price/data.length);
     $('#low_price').text(low_price);
     $('#loc_score').text(avg_loc_score);
-    $('#book_low').wrap('<a href=' + low_url +' />');
+    $('#neighborhood_overview').text(nb_overview);
 
+    $('#book_low').wrap('<a href=' + low_url +' />');
     $('#info-bar').fadeIn('slow');
-    $('#tabs-1').fadeIn();
+    $('#tabs-1').fadeIn('slow');
     num_animation();
     //$('#chartContainer').fadeIn("slow");
     showchart(loc_dis);

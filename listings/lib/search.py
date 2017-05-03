@@ -78,6 +78,7 @@ def search_keyword(lat_a, lon_a, range, roomtype, limit=100):
                 "url": house['_source']['listing_url'],
                 "name": house['_source']['name'],
                 "picture_url": house['_source']['picture_url'],
+                "neighborhood_overview": house['_source']['neighborhood_overview'],
             }
         })
     return geo_result
