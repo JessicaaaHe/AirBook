@@ -112,10 +112,10 @@ function parseJSON(data, status, xhr){
 
     map.setCenter(new google.maps.LatLng(data[0]['geometry']['coordinates'][0],data[0]['geometry']['coordinates'][1]));
     map.setZoom(14);
-    $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value);//.fadeIn("slow");
-    $('#average_price').text("The average price is $" + total_price/data.length);//.fadeIn("slow");
-    $('#low_price').text("The lowest price is $" + low_price);//.fadeIn("slow");
-    $('#loc_score').text("The Average Location Rating is " + avg_loc_score);//.fadeIn("slow");
+    $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value);
+    $('#average_price').text("The average price is $" + total_price/data.length);
+    $('#low_price').text("The lowest price is $" + low_price);
+    $('#loc_score').text("The Average Location Rating is " + avg_loc_score);
 
 
     $('#info-bar').fadeIn('slow');
