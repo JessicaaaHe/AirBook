@@ -5,7 +5,7 @@ import googlemaps, json
 
 host = 'search-airbookdata-34vdv2rkhajpuxvgtgxhuvr5hy.us-east-1.es.amazonaws.com'
 #awsauth = AWS4Auth('', '', 'us-east-1', 'es')
-
+#h
 es = Elasticsearch(
     hosts=[{'host': host, 'port': 443}],
     #http_auth=awsauth,
