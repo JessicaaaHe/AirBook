@@ -11,11 +11,11 @@
 
 {% block content %}
     <div class="container">
-            <div class="row float-left">
-                <div class="col-sm-5">
+            <div class="row">
+                <div class="col-sm-4">
                 <input id='keyword' name='keyword' class="form-control" placeholder="Enter your location">
                 </div>
-                <div class="col-md-2">
+                <div class="col-md-3 select">
                     <select class="form-control" name="roomtype" onchange="getRoomType(this.value)">
                         <option selected="selected" disabled>Room Type</option>
                         <option value="Shared room">Shared room</option>
@@ -29,33 +29,45 @@
     <br/>
     <div class="container" style="height:80%; width:95%">
         <div class="row" style="height:100%; width:95%">
-            <div class="col-sm-8" style="height:100%; width:50%;">
+            <div class="col-sm-6" style="height:100%; width:55%;">
                     <div id="map" ></div>
             </div>
              <div id='info-panel' class="col-sm-5">
                  <div id='info-bar' style="display: none">
                      <ul class="nav nav-pills" >
-                        <li class="active" id="basic_link"><a href="#">Basic Info</a></li>
-                        <li id="chart_link"><a href="#">Chart</a></li>
+                        <li class="active" id="tab1"><a href="#">Summary</a></li>
+                        <li id="tab2"><a href="#">Price</a></li>
+                         <li id="tab3"><a href="#">Location</a></li>
                         <a id="book_low" class="btn btn-success pull-right" role="button">Book Lowest Price</a>                     </ul>
                  </div>
 
                 <div id="tabs-1" style="display: none;">
-                    <h3><div id="rt_text"></div></h3>
-                    <h3>The Average Price is $<div id="average_price" class="count "></div></h3>
-                    <h3>The Lowest Price is $<div id="low_price"  class="count "></div></h3>
-                    <h3>Average Location Score is<div id="loc_score" class="fcount"></div></h3>
-                    <p class="text-success"><div id="neighborhood_overview"></div></p>
+                    <h2><div id="rt_text"></div></h2>
+                    <div class="inline-div text">The Average Price is </div>
+                    <div class="inline-div num_text" style="color: #e6b800;">$</div>
+                    <div id="average_price" class="count num_text inline-div " style="color: #e6b800;"></div>
+                    <br/>
+                    <div class="inline-div text">The Lowest Price is </div>
+                    <div class="inline-div num_text" style="color: #228B22;">$</div>
+                    <div id="low_price"  class="count num_text inline-div " style="color: #228B22;"></div>
+                    <br/>
+                    <div class="inline-div text">Average Location Score is</div>
+                    <div id="loc_score" class="fcount num_text inline-div " style="color: #ff332c;"></div>
+                    <br/>
+                    <p id="neighborhood_overview" class="text-success"></p>
                 </div>
                 <div id="tabs-2" style="display:none;">
-                     <div id="chartContainer" style="height: 150px;"></div>
-                     <div id="chartContainer2" style="height: 150px;"></div>
+                    <div id="chartContainer2"></div>
+                </div>
+                 <div id="tabs-3" style="display:none;">
+                     <div id="chartContainer"></div>
                 </div>
              </div>
         </div>
     </div>
 
     <script src="{% static 'animation.js' %}"></script>
+    <script src="{% static 'mapstyle.js' %}"></script>
     <script src="{% static 'map.js' %}"></script>
     <script src="{% static 'chart.js' %}"></script>
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAzqsrd9qkXn7qoQSJJwCkhIMM77OffJSI&callback=initMap"></script>

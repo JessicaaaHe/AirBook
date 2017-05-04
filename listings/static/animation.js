@@ -7,24 +7,42 @@ $("button").click(
   }
 );
 
-$("#chart_link").click(
+$("#tab1").click(
   function() {
-      $('#basic_link').removeClass('active');
-      $('#chart_link').addClass('active');
+      $('#tab1').addClass('active');
+      $('#tab2').removeClass('active');
+      $('#tab3').removeClass('active');
+
       $('#tabs-1').fadeOut('slow');
       $('#tabs-2').fadeIn('slow');
-
+      $('#tabs-3').fadeOut('slow');
   }
 );
 
-$("#basic_link").click(
+$("#tab2").click(
   function() {
-      $('#chart_link').removeClass('active');
-      $('#basic_link').addClass('active');
-      $('#tabs-2').fadeOut('slow');
-      $('#tabs-1').fadeIn('slow');
+      $('#tab1').removeClass('active');
+      $('#tab2').addClass('active');
+      $('#tab3').removeClass('active');
+
+      $('#tabs-1').fadeOut('slow');
+      $('#tabs-2').fadeIn('slow');
+      $('#tabs-3').fadeOut('slow');
   }
 );
+
+$("#tab3").click(
+  function() {
+      $('#tab1').removeClass('active');
+      $('#tab2').removeClass('active');
+      $('#tab3').addClass('active');
+
+      $('#tabs-1').fadeOut('slow');
+      $('#tabs-2').fadeOut('slow');
+      $('#tabs-3').fadeIn('slow');
+  }
+);
+
 
 function num_animation() {
     $('.count').each(function () {

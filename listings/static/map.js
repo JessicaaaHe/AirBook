@@ -3,7 +3,8 @@ var markers = [];
 function initMap() {   //init map
     map = new google.maps.Map(document.getElementById('map'), {
         zoom: 12,
-        center: new google.maps.LatLng(40.706674, -73.956948)
+        center: new google.maps.LatLng(40.706674, -73.956948),
+        styles: map_stylesArray,
     });
     //add
     google.maps.event.addListener(map, 'click', function (event) {
@@ -111,6 +112,7 @@ function parseJSON(data, status, xhr){
     map.setCenter(new google.maps.LatLng(data[0]['geometry']['coordinates'][0],data[0]['geometry']['coordinates'][1]));
     map.setZoom(14);
 
+
     $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value);
     $('#average_price').text(total_price/data.length);
     $('#low_price').text(low_price);
@@ -121,15 +123,13 @@ function parseJSON(data, status, xhr){
     $('#info-bar').fadeIn('slow');
     $('#tabs-1').fadeIn('slow');
     num_animation();
-    //$('#chartContainer').fadeIn("slow");
     showchart(loc_dis);
-    //$('#chartContainer2').fadeIn("slow");
     showchart2(prc_dis);
 }
 
 function attachSecretMessage(marker, property) {
   var infowindow = new google.maps.InfoWindow({
-    content: " <div style=' width:100px;max-width:100px;' >" + property['name']+ " </div> " +
+    content: " <div style=' width:100px;max-width:100px;' >" + property['name']+ " $" + property["price"] + " </div> " +
       " <img src=' "+ property['picture_url'] + " ' width='100px'> "
   });
 
