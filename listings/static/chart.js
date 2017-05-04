@@ -22,7 +22,7 @@ function showchart(loc_dis) {
 	new CanvasJS.Chart("chartContainer",
 	{
 	    title:{
-			text: "Location Review By Customer",
+			text: "Location Review",
 		},
 		data: [
 		{
