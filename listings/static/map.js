@@ -21,6 +21,7 @@ function initMap() {   //init map
     google.maps.event.addListener(map, 'dblclick', function (event) {
         clearTimeout(update_timeout);
     });
+    showtransit();
 }
 
 function setMapOnAll(map) {
@@ -68,8 +69,8 @@ function parseJSON(data, status, xhr){
         total_price += price;
         if(s_loc >= 0) {
             total_score += s_loc;
-            c_loc += 1
-            loc_dis[s_loc] += 1
+            c_loc += 1;
+            loc_dis[s_loc] += 1;
         }
 
         if(price < 120.0 && price >= 80.0) {
@@ -112,8 +113,7 @@ function parseJSON(data, status, xhr){
     map.setCenter(new google.maps.LatLng(data[0]['geometry']['coordinates'][0],data[0]['geometry']['coordinates'][1]));
     map.setZoom(14);
 
-
-    $('#rt_text').text('For ' + roomtype + ' Around '+ document.getElementsByName("keyword")[0].value);
+    $('#rt_text').text(roomtype + ' around '+ document.getElementsByName("keyword")[0].value);
     $('#average_price').text(total_price/data.length);
     $('#low_price').text(low_price);
     $('#loc_score').text(avg_loc_score);
@@ -144,4 +144,9 @@ function attachSecretMessage(marker, property) {
     window.location.href = property['url'];
 
 });
+}
+
+function showtransit() {
+    var transitLayer = new google.maps.TransitLayer();
+    transitLayer.setMap(map);
 }

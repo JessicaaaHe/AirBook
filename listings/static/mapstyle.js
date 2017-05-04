@@ -1,4 +1,4 @@
-var map_stylesArray = [
+var map_stylesArray =[
   {
     "elementType": "geometry",
     "stylers": [
@@ -77,11 +77,28 @@ var map_stylesArray = [
     ]
   },
   {
+    "featureType": "poi.business",
+    "stylers": [
+      {
+        "visibility": "off"
+      }
+    ]
+  },
+  {
     "featureType": "poi.park",
     "elementType": "geometry",
     "stylers": [
       {
         "color": "#e5e5e5"
+      }
+    ]
+  },
+  {
+    "featureType": "poi.park",
+    "elementType": "labels.text",
+    "stylers": [
+      {
+        "visibility": "off"
       }
     ]
   },
@@ -184,4 +201,4 @@ var map_stylesArray = [
       }
     ]
   }
-]
+];
