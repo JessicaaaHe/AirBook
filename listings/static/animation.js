@@ -13,8 +13,8 @@ $("#tab1").click(
       $('#tab2').removeClass('active');
       $('#tab3').removeClass('active');
 
-      $('#tabs-1').fadeOut('slow');
-      $('#tabs-2').fadeIn('slow');
+      $('#tabs-1').fadeIn('slow');
+      $('#tabs-2').fadeOut('slow');
       $('#tabs-3').fadeOut('slow');
   }
 );
